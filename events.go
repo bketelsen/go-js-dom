@@ -11,7 +11,7 @@ func WrapEvent(o js.Value) Event {
 }
 
 func wrapEvent(o js.Value) Event {
-	if o == nil || o == js.Undefined {
+	if o == js.Null || o == js.Undefined {
 		return nil
 	}
 	ev := &BasicEvent{o}
@@ -199,7 +199,7 @@ func (ev *BasicEvent) StopPropagation() {
 }
 
 func (ev *BasicEvent) Underlying() js.Value {
-	return ev.Object
+	return ev.Value
 }
 
 type AnimationEvent struct{ *BasicEvent }
@@ -350,7 +350,7 @@ func (ev *TouchEvent) Touches() []*Touch {
 func touchListToTouches(tl js.Value) []*Touch {
 	out := make([]*Touch, tl.Length())
 	for i := range out {
-		out[i] = &Touch{Object: tl.Index(i)}
+		out[i] = &Touch{Value: tl.Index(i)}
 	}
 	return out
 }

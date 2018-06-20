@@ -1878,7 +1878,7 @@ type HTMLButtonElement struct {
 	TabIndex          int    `js:"tabIndex"`
 	Type              string `js:"type"`
 	ValidationMessage string `js:"validationMessage"`
-	Value             string `js:"value"`
+	ElementValue      string `js:"value"`
 	WillValidate      bool   `js:"willValidate"`
 }
 
@@ -2450,7 +2450,7 @@ type HTMLInputElement struct {
 	TabIndex           int       `js:"tabIndex"`
 	Type               string    `js:"type"`
 	ValidationMessage  string    `js:"validationMessage"`
-	Value              string    `js:"value"`
+	ElementValue       string    `js:"value"`
 	ValueAsDate        time.Time `js:"valueAsDate"`
 	ValueAsNumber      float64   `js:"valueAsNumber"`
 	Width              string    `js:"width"`
@@ -2716,7 +2716,7 @@ type HTMLOptionElement struct {
 	Label           string `js:"label"`
 	Selected        bool   `js:"selected"`
 	Text            string `js:"text"`
-	Value           string `js:"value"`
+	ElementValue    string `js:"value"`
 }
 
 func (e *HTMLOptionElement) Form() *HTMLFormElement {
@@ -2729,25 +2729,25 @@ type HTMLOutputElement struct {
 	Name              string `js:"name"`
 	Type              string `js:"type"`
 	ValidationMessage string `js:"validationMessage"`
-	Value             string `js:"value"`
+	ElementValue      string `js:"value"`
 	WillValidate      bool   `js:"willValidate"`
 }
 
 func (e *HTMLOutputElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 func (e *HTMLOutputElement) Labels() []*HTMLLabelElement {
-	return getLabels(e.Object)
+	return getLabels(e.Value)
 }
 
 func (e *HTMLOutputElement) Validity() *ValidityState {
 	// TODO replace with a field once GopherJS supports that
-	return &ValidityState{Object: e.Get("validity")}
+	return &ValidityState{Value: e.Get("validity")}
 }
 
 func (e *HTMLOutputElement) For() *TokenList {
-	return &TokenList{dtl: e.Get("htmlFor"), o: e.Object}
+	return &TokenList{dtl: e.Get("htmlFor"), o: e.Value}
 }
 
 func (e *HTMLOutputElement) CheckValidity() bool {
@@ -2770,13 +2770,13 @@ type HTMLPreElement struct{ *BasicHTMLElement }
 
 type HTMLProgressElement struct {
 	*BasicHTMLElement
-	Max      float64 `js:"max"`
-	Position float64 `js:"position"`
-	Value    float64 `js:"value"`
+	Max          float64 `js:"max"`
+	Position     float64 `js:"position"`
+	ElementValue float64 `js:"value"`
 }
 
 func (e HTMLProgressElement) Labels() []*HTMLLabelElement {
-	return getLabels(e.Object)
+	return getLabels(e.Value)
 }
 
 type HTMLQuoteElement struct {
@@ -2806,24 +2806,24 @@ type HTMLSelectElement struct {
 	Size              int    `js:"size"`
 	Type              string `js:"type"`
 	ValidationMessage string `js:"validationMessage"`
-	Value             string `js:"value"`
+	ElementValue      string `js:"value"`
 	WillValidate      bool   `js:"willValidate"`
 }
 
 func (e *HTMLSelectElement) Labels() []*HTMLLabelElement {
-	return getLabels(e.Object)
+	return getLabels(e.Value)
 }
 
 func (e *HTMLSelectElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 func (e *HTMLSelectElement) Options() []*HTMLOptionElement {
-	return getOptions(e.Object, "options")
+	return getOptions(e.Value, "options")
 }
 
 func (e *HTMLSelectElement) SelectedOptions() []*HTMLOptionElement {
-	return getOptions(e.Object, "selectedOptions")
+	return getOptions(e.Value, "selectedOptions")
 }
 
 func (e *HTMLSelectElement) Item(index int) *HTMLOptionElement {
@@ -2848,7 +2848,7 @@ func (e *HTMLSelectElement) NamedItem(name string) *HTMLOptionElement {
 // instead.
 
 func (e *HTMLSelectElement) Validity() *ValidityState {
-	return &ValidityState{Object: e.Get("validity")}
+	return &ValidityState{Value: e.Get("validity")}
 }
 
 func (e *HTMLSelectElement) CheckValidity() bool {
@@ -2957,22 +2957,22 @@ type HTMLTextAreaElement struct {
 	TextLength         int    `js:"textLength"`
 	Type               string `js:"type"`
 	ValidationMessage  string `js:"validationMessage"`
-	Value              string `js:"value"`
+	ElementValue       string `js:"value"`
 	WillValidate       bool   `js:"willValidate"`
 	Wrap               string `js:"wrap"`
 }
 
 func (e *HTMLTextAreaElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 func (e *HTMLTextAreaElement) Labels() []*HTMLLabelElement {
-	return getLabels(e.Object)
+	return getLabels(e.Value)
 }
 
 func (e *HTMLTextAreaElement) Validity() *ValidityState {
 	// TODO replace with a field once GopherJS supports that
-	return &ValidityState{Object: e.Get("validity")}
+	return &ValidityState{Value: e.Get("validity")}
 }
 
 func (e *HTMLTextAreaElement) CheckValidity() bool {
