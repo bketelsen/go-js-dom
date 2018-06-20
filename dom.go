@@ -978,7 +978,7 @@ func (w *window) FrameElement() Element {
 
 func (w *window) Location() *Location {
 	o := w.Get("location")
-	return &Location{Object: o, URLUtils: &URLUtils{Object: o}}
+	return &Location{Value: o, URLUtils: &URLUtils{Value: o}}
 }
 
 func (w *window) Name() string {
@@ -2540,7 +2540,7 @@ func (e *HTMLKeygenElement) Labels() []*HTMLLabelElement {
 
 func (e *HTMLKeygenElement) Validity() *ValidityState {
 	// TODO replace with a field once GopherJS supports that
-	return &ValidityState{Object: e.Get("validity")}
+	return &ValidityState{Value: e.Get("validity")}
 }
 
 func (e *HTMLKeygenElement) CheckValidity() bool {
@@ -2566,13 +2566,13 @@ func (e *HTMLLabelElement) Control() HTMLElement {
 }
 
 func (e *HTMLLabelElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 type HTMLLegendElement struct{ *BasicHTMLElement }
 
 func (e *HTMLLegendElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 type HTMLLinkElement struct {
@@ -2585,11 +2585,11 @@ type HTMLLinkElement struct {
 }
 
 func (e *HTMLLinkElement) Rel() *TokenList {
-	return &TokenList{dtl: e.Get("relList"), o: e.Object, sa: "rel"}
+	return &TokenList{dtl: e.Get("relList"), o: e.Value, sa: "rel"}
 }
 
 func (e *HTMLLinkElement) Sizes() *TokenList {
-	return &TokenList{dtl: e.Get("sizes"), o: e.Object}
+	return &TokenList{dtl: e.Get("sizes"), o: e.Value}
 }
 
 func (e *HTMLLinkElement) Sheet() StyleSheet {
@@ -2647,7 +2647,7 @@ type HTMLMeterElement struct {
 }
 
 func (e HTMLMeterElement) Labels() []*HTMLLabelElement {
-	return getLabels(e.Object)
+	return getLabels(e.Value)
 }
 
 type HTMLModElement struct {
@@ -2678,7 +2678,7 @@ type HTMLObjectElement struct {
 }
 
 func (e *HTMLObjectElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 func (e *HTMLObjectElement) ContentDocument() Document {
@@ -2691,7 +2691,7 @@ func (e *HTMLObjectElement) ContentWindow() Window {
 
 func (e *HTMLObjectElement) Validity() *ValidityState {
 	// TODO replace with a field once GopherJS supports that
-	return &ValidityState{Object: e.Get("validity")}
+	return &ValidityState{Value: e.Get("validity")}
 }
 
 func (e *HTMLObjectElement) CheckValidity() bool {
@@ -2720,7 +2720,7 @@ type HTMLOptionElement struct {
 }
 
 func (e *HTMLOptionElement) Form() *HTMLFormElement {
-	return getForm(e.Object)
+	return getForm(e.Value)
 }
 
 type HTMLOutputElement struct {
