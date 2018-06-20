@@ -6,6 +6,8 @@ import (
 	"github.com/hajimehoshi/gopherwasm/js"
 )
 
+type M map[string]interface{}
+
 func WrapEvent(o js.Value) Event {
 	return wrapEvent(o)
 }
@@ -144,7 +146,7 @@ type EventOptions struct {
 }
 
 func CreateEvent(typ string, opts EventOptions) *BasicEvent {
-	var event = js.Global.Get("Event").New(typ, js.M{
+	var event = js.Global.Get("Event").New(typ, M{
 		"bubbles":    opts.Bubbles,
 		"cancelable": opts.Cancelable,
 	})
