@@ -3,14 +3,14 @@ package dom
 import (
 	"time"
 
-	"github.com/gopherjs/gopherjs/js"
+	"github.com/hajimehoshi/gopherwasm/js"
 )
 
-func WrapEvent(o *js.Object) Event {
+func WrapEvent(o js.Value) Event {
 	return wrapEvent(o)
 }
 
-func wrapEvent(o *js.Object) Event {
+func wrapEvent(o js.Value) Event {
 	if o == nil || o == js.Undefined {
 		return nil
 	}
@@ -131,12 +131,12 @@ type Event interface {
 	PreventDefault()
 	StopImmediatePropagation()
 	StopPropagation()
-	Underlying() *js.Object
+	Underlying() js.Value
 }
 
 // Type BasicEvent implements the Event interface and is embedded by
 // concrete event types.
-type BasicEvent struct{ *js.Object }
+type BasicEvent struct{ js.Value }
 
 type EventOptions struct {
 	Bubbles    bool
@@ -198,7 +198,7 @@ func (ev *BasicEvent) StopPropagation() {
 	ev.Call("stopPropagation")
 }
 
-func (ev *BasicEvent) Underlying() *js.Object {
+func (ev *BasicEvent) Underlying() js.Value {
 	return ev.Object
 }
 
@@ -269,7 +269,7 @@ type MediaStreamEvent struct{ *BasicEvent }
 
 type MessageEvent struct {
 	*BasicEvent
-	Data *js.Object `js:"data"`
+	Data js.Value `js:"data"`
 }
 
 type MouseEvent struct {
@@ -347,7 +347,7 @@ func (ev *TouchEvent) Touches() []*Touch {
 	return touchListToTouches(ev.Get("touches"))
 }
 
-func touchListToTouches(tl *js.Object) []*Touch {
+func touchListToTouches(tl js.Value) []*Touch {
 	out := make([]*Touch, tl.Length())
 	for i := range out {
 		out[i] = &Touch{Object: tl.Index(i)}
@@ -360,7 +360,7 @@ func touchListToTouches(tl *js.Object) []*Touch {
 //
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/Touch.
 type Touch struct {
-	*js.Object
+	js.Value
 	Identifier    int     `js:"identifier"`
 	ScreenX       float64 `js:"screenX"`
 	ScreenY       float64 `js:"screenY"`
@@ -406,7 +406,7 @@ type EventTarget interface {
 	// AddEventListener adds a new event listener and returns the
 	// wrapper function it generated. If using RemoveEventListener,
 	// that wrapper has to be used.
-	AddEventListener(typ string, useCapture bool, listener func(Event)) func(*js.Object)
-	RemoveEventListener(typ string, useCapture bool, listener func(*js.Object))
+	AddEventListener(typ string, useCapture bool, listener func(Event)) func(js.Value)
+	RemoveEventListener(typ string, useCapture bool, listener func(js.Value))
 	DispatchEvent(event Event) bool
 }
